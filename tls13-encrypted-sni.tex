@@ -97,6 +97,7 @@ We just had this idea yesterday, so it's hand-wavy. No analysis has been done.
 \item Observation of traffic between the client and gateway/covering site does not allow attackers
    to determine whether the connection is to the the covering site or the
    hidden site.
+\item Client's first connection to hidden server need not be protected.
 \end{enumerate}
 
 \end{slide}
@@ -123,6 +124,41 @@ We just had this idea yesterday, so it's hand-wavy. No analysis has been done.
 \end{itemize}
 
 \end{slide}
+
+\begin{slide}
+\heading{Co-tenanted Flow}
+
+\vspace{-4ex}
+\tiny{
+$$
+\xymatrix@R=.17in@C=1.4in{
+\txt{Client} & \txt{Hidden Server} \\
+\ar[r]^{\txt{ClientHello [SNI=innocuous.example.com]}}_{\txt{[EarlyDataIndication, configuration\_id=Y]}} & \\
+\ar[r]^{\txt{\emph{EncryptedExtensions [RSNI=hidden.example.com]}}} & \\
+\ar[r]^{\txt{\emph{Certificate*, CertificateVerify*, Finished}}} & \\
+\ar[r]^{\txt{\emph{Application Data }}} & \\
+& \ar[l]_{\txt{ServerHello [EarlyDataIndication]}} \\
+& \ar[l]_{\txt{\emph{Certificate (hidden)}}} \\
+& \ar[l]_{\txt{...}} \\
+& \ar[l]_{\txt{\emph{Finished}}} \\
+\ar[r]^{\txt{\emph{Certificate*, CertificateVerify*}}}_{\txt{\emph{Finished}}} & \\
+}
+$$
+}
+\end{slide}
+
+
+\begin{slide}
+\heading{Intuition}
+
+\begin{itemize}
+\item This is just a standard 0-RTT handshake, but using the fact that the first flight is encrypted to hide the SNI.
+\end{itemize}
+
+
+\end{slide}
+
+
 
 \begin{slide}
 \heading{Gateway Server Flow}
