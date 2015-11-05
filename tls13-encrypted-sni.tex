@@ -185,11 +185,16 @@ $$
 \begin{slide}
 \heading{Intuition}
 
+\vspace{-3ex}
 \begin{itemize}
 \item The client \emph{knows} that encrypted SNI is in use
   \begin{itemize}
   \item 0-RTT data goes to the gateway \emph{not} to the hidden server
   \item Can't send any application data in 0-RTT
+  \item But the covering site \emph{emph} can have 0-RTT for non-hidden servers
+    \begin{itemize}
+    \item Switch-hit based on RSNI
+    \end{itemize}
   \end{itemize}
 
 \item So what \emph{certificate} is used to generate keys for 0-RTT?
