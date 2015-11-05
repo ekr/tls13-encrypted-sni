@@ -135,7 +135,7 @@ $$
 \ar[r]^{\txt{ClientHello [SNI=innocuous.example.com]}}_{\txt{[EarlyDataIndication, configuration\_id=Y]}} & \\
 \ar[r]^{\txt{\emph{EncryptedExtensions [RSNI=hidden.example.com]}}} & \\
 \ar[r]^{\txt{\emph{Finished}}} & \\
-& \ar[r]^{\txt{ClientHello [SNI=innocuous.example.com]}}_{\txt{[configuration\_id=Y]}} & \\
+& \ar[r]^{\txt{ClientHello [SNI=innocuous.example.com]}}_{\txt{[EarlyDataIndication, configuration\_id=Y]}} & \\
 & & \ar[l]_{\txt{ServerHello [EarlyDataIndication]}} \\
 & & \ar[l]_{\txt{\emph{Certificate (hidden)}}} \\
 & & \ar[l]_{\txt{...}} \\
