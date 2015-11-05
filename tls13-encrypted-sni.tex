@@ -70,7 +70,6 @@
 \large{
 \begin{tabular}{c}
 DKG/EKR
-\url{ekr@rtfm.com}
 \end{tabular}
 }
 \end{center}
@@ -78,6 +77,27 @@ DKG/EKR
 \end{slide}
 
 \centerslidesfalse 
+
+\begin{slide}
+\heading{Basic Flow}
+
+\tiny{
+$$
+\xymatrix@R=.15in@C=1.4in{
+\txt{Client} & \txt{Gateway} & \txt{Hidden Server} \\
+\ar[r]^{\txt{ClientHello [SNI=innocuous.example.com]}}_{\txt{[EarlyDataIndication, configuration\_id=Y]}} & \\
+\ar[r]^{\txt{\emph{EncryptedExtensions [RSNI=hidden.example.com]}}} & \\
+\ar[r]^{\txt{\emph{Finished}}} & \\
+& \ar[r]^{\txt{ClientHello [SNI=innocuous.example.com]}}_{\txt{[configuration\_id=Y]}} & \\
+& & \ar[l]_{\txt{ServerHello [EarlyDataIndication]}} \\
+& & \ar[l]_{\txt{\emph{Certificate (hidden)}}} \\
+& & \ar[l]_{\txt{...}} \\
+& & \ar[l]_{\txt{\emph{Finished}}} \\
+\ar[r]^{\txt{\emph{Certificate*, CertificateVerify*}}}_{\txt{\emph{Finished}}} & \\
+}
+$$
+}
+\end{slide}
 
 \end{document}  
                 
