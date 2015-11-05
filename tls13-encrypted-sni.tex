@@ -168,6 +168,31 @@ $$
 
 \item Yes, this is a bit weird
 \end{itemize}
+\end{slide}
+
+
+\begin{slide}
+\heading{How does the client learn about this?}
+
+\begin{itemize}
+\item Client needs to know triplet [ServerConfiguration (DH\_s), CSNI, GCERT]
+\item Traffic to hidden servers \emph{must} use the same configuration id as traffic to other servers fronted by gateway
+\item Client's first connection to hidden server isn't protected.
+\end{itemize}
+\end{slide}
+
+\begin{slide}
+\heading{Possible options}
+
+\vspace{-5ex}
+\begin{enumerate}
+\item Hidden server sends unsolicited extension with CSNI and GCERT
+\item Hidden server sends CSNI and GCERT in ServerConfiguration but in some other part of it that's not hashed into the keys.
+\item Hidden server sends a ServerConfiguration with CSNI and GCERT but with same configuration\_id as the ordinary gateway ServerConfiguration. Requires gateway server to do trial decryption.
+\item Hidden server delivers the triplet in a non-TLS message (e.g., HTTP header)
+\item Hidden server just delivers gateway's domain name somehow and then the
+  client connects to the gateway server to get ServerConfiguration.
+\end{enumerate}
 
 \end{slide}
 
