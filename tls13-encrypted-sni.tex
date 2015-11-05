@@ -76,10 +76,56 @@ DKG/EKR
 
 \end{slide}
 
+\begin{slide}
+\heading{DISCLAIMER: THIS IS PROBABLY HALF-BAKED}
+
+We just had this idea yesterday, so it's hand-wavy. No analysis has been done.
+\end{slide}
+
+
 \centerslidesfalse 
 
 \begin{slide}
-\heading{Basic Flow}
+\heading{Desired security properties}
+
+\begin{enumerate}
+\item If you connect to the hidden site, you can learn that someone is covering
+   for it and how to connect to the covering site.
+\item If you connect to the coverting site, you don't learn that it is covering
+   for anyone or who that list is. However, you can *verify* that is covering
+   for someone if you suspect that it is.
+\item Observation of traffic between the client and gateway/covering site does not allow attackers
+   to determine whether the connection is to the the covering site or the
+   hidden site.
+\end{enumerate}
+
+\end{slide}
+
+\begin{slide}
+\heading{Operational Modes}
+
+\begin{itemize}
+\item Co-tenanted sites with wildcard certificate
+  \begin{itemize}
+  \item Client just needs to know it can omit SNI
+  \end{itemize}
+
+\item Co-tenanted sites with SAN certificate
+  \begin{itemize}
+  \item Need encrypted SNI only
+  \end{itemize}
+
+\item Gateway server with separate origin server
+  \begin{itemize}
+  \item The origin server shouldn't see any application-layer traffic
+  \item Need something fancier
+  \end{itemize}
+\end{itemize}
+
+\end{slide}
+
+\begin{slide}
+\heading{Gateway Server Flow}
 
 \vspace{-4ex}
 \tiny{
@@ -98,6 +144,31 @@ $$
 }
 $$
 }
+\end{slide}
+
+\begin{slide}
+\heading{Intuition}
+
+\begin{itemize}
+\item The client \emph{knows} that encrypted SNI is in use
+  \begin{itemize}
+  \item 0-RTT data goes to the gateway \emph{not} to the hidden server
+  \item Can't send any application data in 0-RTT
+  \end{itemize}
+
+\item So what \emph{certificate} is used to generate keys for 0-RTT?
+  \begin{itemize}
+  \item Shouldn't be hidden server's certificate (would have to iterate)
+  \item So, the gateway's certificate
+    \begin{itemize}
+    \item This makes sense since we're encrypting to the gateway
+    \end{itemize}
+  \item TLS doesn't require that these certs be the same
+  \end{itemize}
+
+\item Yes, this is a bit weird
+\end{itemize}
+
 \end{slide}
 
 \end{document}  
